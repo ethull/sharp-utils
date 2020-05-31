@@ -1,0 +1,18 @@
+h1 {
+  font-weight: bold;
+}
+.dropzone {
+  border-style: dashed;
+  min-width: 90%;
+  min-height: 10vw;
+  max-height: 15vw;
+  font-size: 3vh;
+}
+
+.dropzoneCentre {
+  height: 2em;
+}
+
+input {
+  margin-bottom: 5px;
+}
