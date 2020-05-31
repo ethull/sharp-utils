@@ -1,18 +1,29 @@
-h1 {
+div > h1 {
+  margin-top: 10vh;
   font-weight: bold;
 }
+
 .dropzone {
   border-style: dashed;
-  min-width: 90%;
-  min-height: 10vw;
-  max-height: 15vw;
   font-size: 3vh;
+  margin-top: 4vh;
 }
 
-.dropzoneCentre {
-  height: 2em;
+.input {
+  margin-top: 4vh;
+  min-width: 100%;
 }
 
-input {
-  margin-bottom: 5px;
+.textarea {
+  background: rgba(0, 0, 0, 0);
+  margin-top: 4vh;
+  /* .form-control does instead
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px #6c757d;
+  border: 1px solid transparent;
+  */
+  margin-top: 4vh;
+  min-width: 100%;
+  outline: 0;
+  resize: none;
 }

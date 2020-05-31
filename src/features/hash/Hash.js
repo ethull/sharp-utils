@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+// area to drag and drop files into
 import Dropzone from "react-dropzone";
+//react searchable/filterable dropdown input
+import Select from "react-select";
+//cryptogrpagy module
 import CryptoJS from "crypto-js";
 import "./Hash.css";
 
@@ -9,16 +13,24 @@ export default class Hash extends Component {
     //this.state = this.props.location.state;
     this.state = {
       unhashed: "",
-      hashed: ""
+      hashed: "",
+      currentAlgorithm: ""
     };
+    this.algorithms = [
+      { value: "md5", label: "md5" },
+      { value: "sha1", label: "sha1" }
+    ];
   }
 
   handleChange = event => {
-    console.log(event.target.id);
-    console.log(event.target.value);
     this.setState({ [event.target.id]: event.target.value });
-    console.log(this.state.unhashed);
-    console.log(this.state);
+    this.calcHashText(event.target.value);
+  };
+
+  handleSelection = selected => {
+    this.setState({ currentAlgorithm: selected.value }, () =>
+      console.log(this.state.currentAlgorithm)
+    );
   };
 
   onUpload = acceptedFiles => {
@@ -45,45 +57,47 @@ export default class Hash extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h1> hash a file or text </h1>
-        <div className="container">
-          <div className="dropzone">
-            <Dropzone
-              className="dropzone"
-              id="dropzone"
-              onDrop={this.onUpload}
-              minSize={0}
-              maxSize={1048576}
-              multiple
-            >
-              {({
-                getRootProps,
-                getInputProps,
-                isDragActive,
-                isDragReject
-              }) => (
-                <section className="dropzoneCentre">
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    {!isDragActive && "Click or drop a file to hash"}
-                    {isDragActive && !isDragReject && "hash file"}
-                    {isDragReject && "File is too large!"}
-                  </div>
-                </section>
-              )}
-            </Dropzone>
-          </div>
-          <input
-            type="text"
-            value={this.state.unhashed}
-            onChange={this.handleChange}
-            id="unhashed"
-            placeholder="enter text to hash"
-          />
-          <div> hash output </div>
-          <input type="text" value={this.state.hashed} readOnly />
+        <Select
+          options={this.algorithms}
+          value={this.state.currentAlgorithm}
+          onChange={this.handleSelection}
+        />
+        <div className="dropzone">
+          <Dropzone
+            className="dropzone"
+            id="dropzone"
+            onDrop={this.onUpload}
+            minSize={0}
+            maxSize={1048576}
+            multiple
+          >
+            {({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
+              <section className="text-center">
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  {!isDragActive && "Click or drop a file to hash"}
+                  {isDragActive && !isDragReject && "hash file"}
+                  {isDragReject && "File is too large!"}
+                </div>
+              </section>
+            )}
+          </Dropzone>
         </div>
+        <textarea
+          id="unhashed"
+          className="textarea form-control"
+          value={this.state.unhashed}
+          onChange={this.handleChange}
+          placeholder="enter text to hash"
+        />
+        <textarea
+          className="textarea form-control"
+          value={this.state.hashed}
+          placeholder="hashed output"
+          readOnly
+        />
       </div>
     );
   }
