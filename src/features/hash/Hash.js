@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 // area to drag and drop files into
 import Dropzone from "react-dropzone";
-//react searchable/filterable dropdown input
-import Select from "react-select";
+import DropdownSearch from "../../common/DropdownSearch";
 //cryptogrpagy module
 import CryptoJS from "crypto-js";
 import "./Hash.css";
@@ -18,7 +17,13 @@ export default class Hash extends Component {
     };
     this.algorithms = [
       { value: "md5", label: "md5" },
-      { value: "sha1", label: "sha1" }
+      { value: "sha1", label: "sha1" },
+      { value: "sha256", label: "sha256" },
+      { value: "sha512", label: "sha512" },
+      { value: "sha224", label: "sha224" },
+      { value: "sha384", label: "sha384" },
+      { value: "sha3", label: "sha3" },
+      { value: "ripemd160", label: "ripemd160" }
     ];
   }
 
@@ -27,10 +32,9 @@ export default class Hash extends Component {
     this.calcHashText(event.target.value);
   };
 
-  handleSelection = selected => {
-    this.setState({ currentAlgorithm: selected.value }, () =>
-      console.log(this.state.currentAlgorithm)
-    );
+  handleSelect = selected => {
+    this.setState({ currentAlgorithm: selected });
+    console.log(selected);
   };
 
   onUpload = acceptedFiles => {
@@ -50,7 +54,34 @@ export default class Hash extends Component {
   };
 
   calcHashText = text => {
-    var hashed = CryptoJS.SHA1(text).toString();
+    switch (this.state.currentAlgorithm) {
+      case "md5":
+        var hashed = CryptoJS.MD5(text).toString();
+        break;
+      case "sha1":
+        var hashed = CryptoJS.SHA1(text).toString();
+        break;
+      case "sha256":
+        var hashed = CryptoJS.SHA256(text).toString();
+        break;
+      case "sha512":
+        var hashed = CryptoJS.SHA512(text).toString();
+        break;
+      case "sha224":
+        var hashed = CryptoJS.SHA224(text).toString();
+        break;
+      case "sha384":
+        var hashed = CryptoJS.SHA384(text).toString();
+        break;
+      case "sha3":
+        var hashed = CryptoJS.SHA3(text).toString();
+        break;
+      case "ripemd160":
+        var hashed = CryptoJS.RIPEMD160(text).toString();
+        break;
+      default:
+        var hashed = "error";
+    }
     console.log(hashed);
     this.setState({ hashed: hashed });
   };
@@ -59,10 +90,9 @@ export default class Hash extends Component {
     return (
       <div className="container">
         <h1> hash a file or text </h1>
-        <Select
+        <DropdownSearch
           options={this.algorithms}
-          value={this.state.currentAlgorithm}
-          onChange={this.handleSelection}
+          handleSelect={this.handleSelect}
         />
         <div className="dropzone">
           <Dropzone
