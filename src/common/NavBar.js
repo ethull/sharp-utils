@@ -20,6 +20,7 @@ export default class NavBar extends Component {
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="hash">Hash</Nav.Link>
+            <Nav.Link href="time">Time</Nav.Link>
           </Nav>
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
