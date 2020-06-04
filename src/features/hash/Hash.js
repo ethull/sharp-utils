@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import NavBar from "../../common/NavBar";
 // area to drag and drop files into
 import Dropzone from "react-dropzone";
 import DropdownSearch from "../../common/DropdownSearch";
+
 //cryptogrpagy module
 import CryptoJS from "crypto-js";
 import "./Hash.css";
@@ -33,8 +35,12 @@ export default class Hash extends Component {
   };
 
   handleSelect = selected => {
-    this.setState({ currentAlgorithm: selected });
-    console.log(selected);
+    //if existing text entered, when changing algorithm recalc the hash.
+    this.setState({ currentAlgorithm: selected }, () => {
+      if (this.state.unhashed.length > 0) {
+        this.calcHashText(this.state.unhashed);
+      }
+    });
   };
 
   onUpload = acceptedFiles => {
@@ -59,28 +65,28 @@ export default class Hash extends Component {
         var hashed = CryptoJS.MD5(text).toString();
         break;
       case "sha1":
-        var hashed = CryptoJS.SHA1(text).toString();
+        hashed = CryptoJS.SHA1(text).toString();
         break;
       case "sha256":
-        var hashed = CryptoJS.SHA256(text).toString();
+        hashed = CryptoJS.SHA256(text).toString();
         break;
       case "sha512":
-        var hashed = CryptoJS.SHA512(text).toString();
+        hashed = CryptoJS.SHA512(text).toString();
         break;
       case "sha224":
-        var hashed = CryptoJS.SHA224(text).toString();
+        hashed = CryptoJS.SHA224(text).toString();
         break;
       case "sha384":
-        var hashed = CryptoJS.SHA384(text).toString();
+        hashed = CryptoJS.SHA384(text).toString();
         break;
       case "sha3":
-        var hashed = CryptoJS.SHA3(text).toString();
+        hashed = CryptoJS.SHA3(text).toString();
         break;
       case "ripemd160":
-        var hashed = CryptoJS.RIPEMD160(text).toString();
+        hashed = CryptoJS.RIPEMD160(text).toString();
         break;
       default:
-        var hashed = "error";
+        hashed = "error";
     }
     console.log(hashed);
     this.setState({ hashed: hashed });
@@ -88,46 +94,54 @@ export default class Hash extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1> hash a file or text </h1>
-        <DropdownSearch
-          options={this.algorithms}
-          handleSelect={this.handleSelect}
-        />
-        <div className="dropzone">
-          <Dropzone
-            className="dropzone"
-            id="dropzone"
-            onDrop={this.onUpload}
-            minSize={0}
-            maxSize={1048576}
-            multiple
-          >
-            {({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
-              <section className="text-center">
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  {!isDragActive && "Click or drop a file to hash"}
-                  {isDragActive && !isDragReject && "hash file"}
-                  {isDragReject && "File is too large!"}
-                </div>
-              </section>
-            )}
-          </Dropzone>
+      <div>
+        <NavBar />
+        <div className="container">
+          <h1> hash a file or text </h1>
+          <DropdownSearch
+            options={this.algorithms}
+            handleSelect={this.handleSelect}
+          />
+          <div className="dropzone">
+            <Dropzone
+              className="dropzone"
+              id="dropzone"
+              onDrop={this.onUpload}
+              minSize={0}
+              maxSize={1048576}
+              multiple
+            >
+              {({
+                getRootProps,
+                getInputProps,
+                isDragActive,
+                isDragReject
+              }) => (
+                <section className="text-center">
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {!isDragActive && "Click or drop a file to hash"}
+                    {isDragActive && !isDragReject && "hash file"}
+                    {isDragReject && "File is too large!"}
+                  </div>
+                </section>
+              )}
+            </Dropzone>
+          </div>
+          <textarea
+            id="unhashed"
+            className="textarea form-control"
+            value={this.state.unhashed}
+            onChange={this.handleChange}
+            placeholder="enter text to hash"
+          />
+          <textarea
+            className="textarea form-control"
+            value={this.state.hashed}
+            placeholder="hashed output"
+            readOnly
+          />
         </div>
-        <textarea
-          id="unhashed"
-          className="textarea form-control"
-          value={this.state.unhashed}
-          onChange={this.handleChange}
-          placeholder="enter text to hash"
-        />
-        <textarea
-          className="textarea form-control"
-          value={this.state.hashed}
-          placeholder="hashed output"
-          readOnly
-        />
       </div>
     );
   }

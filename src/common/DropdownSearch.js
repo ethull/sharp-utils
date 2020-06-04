@@ -1,13 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
 //react searchable/filterable dropdown input
 import Select from "react-select";
-
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
-];
 
 export default class DropdownSearch extends React.Component {
   constructor(props) {
