@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Select, { createFilter } from "react-select";
 import { FixedSizeList as List } from "react-window";
 import { components } from "react-select";
 
@@ -46,10 +44,6 @@ class MenuList extends Component {
 }
 
 export default class EfficientSearch extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <DropdownSearch
