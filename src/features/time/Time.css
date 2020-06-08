@@ -1,0 +1,7 @@
+.tzInp {
+  width: 50%;
+}
+#tzOut {
+  width: 50%;
+  float: left;
+}

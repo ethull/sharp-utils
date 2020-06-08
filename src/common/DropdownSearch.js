@@ -1,45 +1,40 @@
 import React from "react";
 //react searchable/filterable dropdown input
-import Select from "react-select";
+import Select, { createFilter } from "react-select";
 
 export default class DropdownSearch extends React.Component {
   constructor(props) {
     super(props);
     //this.state = this.props.location.state;
     this.state = {
-      selectedOption: null,
-      inputValue: ""
+      selectedOption: null
     };
   }
-
-  handleInputChange = inputValue => {
-    this.setState({ inputValue });
-  };
 
   handleChange = selectedOption => {
     this.setState({ selectedOption });
     this.props.handleSelect(selectedOption.value);
   };
 
-  handleFocus = () => {
-    const { selectedOption } = this.state;
-    if (selectedOption && selectedOption.label) {
-      this.setState({ inputValue: selectedOption.label });
-    }
-  };
-
   render() {
-    const { selectedOption, inputValue } = this.state;
+    //const { selectedOption, inputValue } = this.state;
 
     return (
       <Select
-        value={selectedOption}
+        value={this.state.selectedOption}
         onChange={this.handleChange}
-        inputValue={inputValue}
-        onInputChange={this.handleInputChange}
-        onFocus={this.handleFocus}
+        filterOption={createFilter({ ignoreAccents: false, ignoreCase: true })}
         options={this.props.options}
+        placeholder={this.props.placeholder}
+        isMulti={this.props.isMulti}
+        components={this.props.components}
       />
     );
   }
 }
+
+DropdownSearch.defaultProps = {
+  placeholder: "choose value",
+  isMulti: false,
+  components: false
+};

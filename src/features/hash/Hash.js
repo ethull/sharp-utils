@@ -101,6 +101,7 @@ export default class Hash extends Component {
           <DropdownSearch
             options={this.algorithms}
             handleSelect={this.handleSelect}
+            style={{ width: "10%" }}
           />
           <div className="dropzone">
             <Dropzone

@@ -1,6 +1,5 @@
 *.swp
-typings
-src/unused
+unused
 
 # github default
 # dependencies

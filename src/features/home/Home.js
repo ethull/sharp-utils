@@ -5,7 +5,9 @@ export default class Home extends Component {
     return (
       <div>
         <Navbar />
-        <h1> landing page! </h1>
+        <div className="container">
+          <h1> landing page! </h1>
+        </div>
       </div>
     );
   }

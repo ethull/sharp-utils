@@ -2,7 +2,6 @@ import React from "react";
 import Select from "react-select";
 import sortBy from "lodash.sortby";
 import moment from "moment-timezone";
-import { List } from "react-virtualized";
 
 export const formatTimezone = tzString =>
   `(GMT${moment.tz(tzString).format("Z")}) ${tzString}`;
@@ -20,30 +19,6 @@ export const getTimezoneProps = tzString => {
     value: `${tzString}`,
     time: `${x}`,
     offset: tz._offset
-  };
-};
-
-export const makeVirtualMenuListComponent = ListProps => {
-  return props => {
-    return (
-      <List
-        rowCount={props.children.length}
-        style={{
-          width: "100%"
-        }}
-        rowHeight={34.18}
-        height={300}
-        width={600}
-        rowRenderer={({ key, index, style }) => {
-          return (
-            <div style={style} key={key}>
-              {props.children[index]}
-            </div>
-          );
-        }}
-        {...ListProps}
-      />
-    );
   };
 };
 
