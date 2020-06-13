@@ -4,6 +4,7 @@ import DropdownSearch from "../../common/DropdownSearch";
 import EfficientSearch from "../../common/EfficientSearch";
 import moment from "moment-timezone";
 import cityTimezones from "city-timezones";
+import TimeInp from "../../common/TimeInp";
 
 import "./Time.css";
 
@@ -84,17 +85,12 @@ export default class Home extends Component {
   };
 
   getData = selected => {
-    console.log(this.ianaNames);
-    console.log(selected);
     if (selected === "city") {
       this.setState({ currentOptions: this.cities });
     } else if (selected === "iana") {
       this.setState({ currentOptions: this.ianaNames });
     } else if (selected === "offset") {
-      this.setState(
-        { currentOptions: this.offsets },
-        console.log(this.state.currentOptions)
-      );
+      this.setState({ currentOptions: this.offsets });
     }
   };
 
@@ -111,35 +107,59 @@ export default class Home extends Component {
     this.setState({ tzOut: selected });
   };
 
+  handleTimeChange = time => {
+    console.log(time);
+  };
+
   render() {
     return (
       <div>
         <Navbar />
         <div className="container">
           <h1> time conversions </h1>
-          <DropdownSearch
-            id="selectAlg"
-            options={[
-              { label: "city", value: "city" },
-              { label: "iana", value: "iana" },
-              { label: "offset", value: "offset" }
-            ]}
-            handleSelect={this.handleAlgSelect}
-            placeholder="search method"
-          />
-          <EfficientSearch
-            id="tzInp"
-            className="tzInp"
-            options={this.state.currentOptions}
-            handleSelect={this.handleTzInpSelect}
-            placeholder="input timezone"
-          />
-          <EfficientSearch
-            id="tzOut"
-            options={this.state.currentOptions}
-            handleSelect={this.handleTzOutSelect}
-            placeholder="output timezone"
-          />
+          <div className="row">
+            <div className="col-6">
+              <DropdownSearch
+                id="selectAlg"
+                options={[
+                  { label: "city", value: "city" },
+                  { label: "iana", value: "iana" },
+                  { label: "offset", value: "offset" }
+                ]}
+                handleSelect={this.handleAlgSelect}
+                placeholder="search method"
+                defaultInputValue={"city"}
+              />{" "}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <EfficientSearch
+                id="tzInp"
+                options={this.state.currentOptions}
+                handleSelect={this.handleTzInpSelect}
+                placeholder="input timezone"
+              />
+            </div>
+
+            <div className="col">
+              <EfficientSearch
+                id="tzOut"
+                options={this.state.currentOptions}
+                handleSelect={this.handleTzOutSelect}
+                placeholder="output timezone"
+              />{" "}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col">
+              <TimeInp id="timeInp" />
+            </div>
+            <div className="col">
+              <TimeInp id="timeOut" />
+            </div>
+          </div>
         </div>
       </div>
     );

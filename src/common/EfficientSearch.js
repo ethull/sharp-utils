@@ -51,6 +51,7 @@ export default class EfficientSearch extends React.Component {
         placeholder={this.props.placeholder}
         isMulti={this.props.isMulti}
         handleSelect={this.props.handleSelect}
+        defaultInputValue={this.props.defaultInputValue}
         components={{ MenuList, Option }}
       />
     );

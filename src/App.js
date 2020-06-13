@@ -6,7 +6,6 @@ import Home from "./features/home/Home";
 import Hash from "./features/hash/Hash";
 import Time from "./features/time/Time";
 import "./App.css";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (

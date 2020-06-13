@@ -1,7 +1,12 @@
-.tzInp {
-  width: 50%;
+/*
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-#tzOut {
-  width: 50%;
-  float: left;
+*/
+
+.row {
+  margin-top: 2%;
 }
