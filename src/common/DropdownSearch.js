@@ -1,3 +1,8 @@
+/*
+    reuseable wrapper around the react-select component
+    label property is used to display options, label and value properties is used in the search algorithm
+*/
+
 import React from "react";
 //react searchable/filterable dropdown input
 import Select, { createFilter } from "react-select";
@@ -8,8 +13,19 @@ export default class DropdownSearch extends React.Component {
     //this.state = this.props.location.state;
     this.state = {
       selectedOption: null,
-      inputValue: this.props.defaultInputValue
+      inputValue: ""
     };
+  }
+
+  //set initial selection and inputValue when component first loads
+  componentDidMount() {
+    const defaultSelect = this.props.options.filter(
+      obj => obj.label === this.props.defaultInputValue
+    );
+
+    if (defaultSelect.length === 1) {
+      this.handleChange(defaultSelect[0]);
+    }
   }
 
   //manual input val control allows for an initial default value
@@ -19,7 +35,7 @@ export default class DropdownSearch extends React.Component {
 
   handleChange = selectedOption => {
     this.setState({ selectedOption });
-    this.props.handleSelect(selectedOption.value);
+    this.props.handleSelect(selectedOption);
   };
 
   render() {

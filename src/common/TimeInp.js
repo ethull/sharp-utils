@@ -1,4 +1,12 @@
-import React, { useState } from "react";
+/*
+    reuseable time input component
+    validates time inputted
+
+    lifts state to parent component
+*/
+
+import React from "react";
+//import React, { useState } from "react";
 
 function isNumber(value) {
   const number = Number(value);
@@ -6,8 +14,8 @@ function isNumber(value) {
 }
 
 export default function TimeInp(props) {
-  var date = new Date();
-  const [time, setTime] = useState(date.getHours() + ":" + date.getMinutes());
+  //var date = new Date();
+  //const [time, setTime] = useState(date.getHours() + ":" + date.getMinutes());
   function validateTime(time) {
     //split via colon to check each part
     const timeArr = time.split(":");
@@ -44,21 +52,35 @@ export default function TimeInp(props) {
   function handleChange(event) {
     //console.log(event.target.value);
     if (validateTime(event.target.value)) {
-      setTime(event.target.value);
+      props.handleChange(event.target.value);
     }
   }
 
   return (
-    <input
-      type="text"
-      className="form-control"
-      onChange={handleChange}
-      value={time}
-      placeholder={props.placeholder}
-    />
+    <div style={{ position: "relative" }}>
+      <label
+        style={{
+          position: "absolute",
+          textAlign: "right",
+          pointerEvents: "none",
+          top: ".4em",
+          right: "1em"
+        }}
+      >
+        {props.day}
+      </label>
+      <input
+        type="text"
+        className="form-control"
+        onChange={handleChange}
+        value={props.value}
+        placeholder={props.placeholder}
+      />
+    </div>
   );
 }
 
 TimeInp.defaultProps = {
-  placeholder: "enter time"
+  placeholder: "enter time",
+  day: ""
 };
