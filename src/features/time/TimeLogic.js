@@ -17,23 +17,24 @@ export function checkTime(time) {
 }
 
 export function convertTimes(timeInp, tzInp, tzOut) {
-
   var prevTimeZ = tzInp.tz;
   var nextTimeZ = tzOut.tz;
-  const currentDate = moment(timeInp, "hh:mm").format();
   //timeInp = "1970-02-02 " + timeInp;
 
   //since we convert time -> time and not date -> date
   //- we only need to know if a time conversion ends up on the prev or next day
-  const inTimeMO = moment.tz(currentDate, prevTimeZ);
+  const inTimeMO = moment.tz(timeInp, "hh:mm", prevTimeZ);
   const startDay = inTimeMO.day();
   const outTimeMO = inTimeMO.tz(nextTimeZ);
   const endDay = outTimeMO.day();
+  console.log(inTimeMO.format());
+  console.log(outTimeMO.format());
 
   const outTime = outTimeMO.format("HH:mm");
   var outDay = "";
   if (startDay === endDay - 1) outDay = "next";
   else if (startDay === endDay + 1) outDay = "prev";
+  console.log(outTime);
 
   return [outTime, outDay];
 }
